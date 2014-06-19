@@ -1,0 +1,20 @@
+JCC = javac
+
+#JFLAGS = -classpath ./jexcelapi/jxl.jar
+
+default: TimeSheetFormatException.class Job.class Driver.class TimeSheet.class 
+
+Job.class: Job.java
+	$(JCC) $(JFLAGS) Job.java
+
+Driver.class: Driver.java
+	$(JCC) $(JFLAGS) Driver.java
+
+TimeSheet.class: TimeSheet.java
+	$(JCC) $(JFLAGS) TimeSheet.java
+	
+TimeSheetFormatException.class: TimeSheetFormatException.java
+	$(JCC) $(JFLAGS) TimeSheetFormatException.java
+
+clean: 
+	$(RM) Job.class Driver.class TimeSheet.class TimeSheetFormatException.class
