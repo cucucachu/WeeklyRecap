@@ -12,6 +12,9 @@ public class Recap {
    public static final int jobNoCol = 2;
    public static final int initialsCol = 3;
    public static final int hoursCol = 4;
+   public static final int milesCol = 5;
+   public static final int fdtCol = 6;
+   public static final int otherCol = 7;
 
    ArrayList<Job> allJobs;
    WritableWorkbook recapWorkbook;
@@ -31,10 +34,15 @@ public class Recap {
    
    public void makeRecap() {
       Label nameLabel = new Label(nameCol, 0, "Project Name");
-      Label jobNoLabel = new Label(jobNoCol, 0, "Project Name");
-      Label initialsLabel = new Label(initialsCol, 0, "Project Name");
-      Label hoursLabel = new Label(hoursCol, 0, "Project Name");
+      Label jobNoLabel = new Label(jobNoCol, 0, "Job Number");
+      Label initialsLabel = new Label(initialsCol, 0, "Employee Initials");
+      Label hoursLabel = new Label(hoursCol, 0, "Hours");
+      Label milesLabel = new Label(milesCol, 0, "Miles");
+      Label fdtLabel = new Label(fdtCol, 0, "FDT");
+      Label otherLabel = new Label(otherCol, 0, "Other");
       jxl.write.Number hours;
+      jxl.write.Number miles;
+      jxl.write.Number fdt;
       int curRow = 1;
       
       try {   
@@ -42,6 +50,9 @@ public class Recap {
          sheet.addCell(jobNoLabel);
          sheet.addCell(initialsLabel);
          sheet.addCell(hoursLabel);
+         sheet.addCell(milesLabel);
+         sheet.addCell(fdtLabel);
+         sheet.addCell(otherLabel);
          
          Collections.sort(allJobs);
          
@@ -55,6 +66,22 @@ public class Recap {
             sheet.addCell(jobNoLabel);
             sheet.addCell(initialsLabel);
             sheet.addCell(hours);
+            
+            if (job.miles != null) {
+               miles = new jxl.write.Number(milesCol, curRow, Double.parseDouble(job.miles));
+               sheet.addCell(miles);
+            }
+            
+            /*
+            if (job.fdt != null && Double.parseDouble(job.fdt) != 0) {
+               fdt = new jxl.write.Number(fdtCol, curRow, Double.parseDouble(job.fdt));
+               sheet.addCell(fdt);
+            }
+            */
+            if (job.other != null) {
+               otherLabel = new Label(otherCol, curRow, job.other);
+               sheet.addCell(otherLabel);
+            }
             
             curRow++;
          }

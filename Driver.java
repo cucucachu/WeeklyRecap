@@ -15,10 +15,8 @@ public class Driver {
          ArrayList<String> timeSheetFileNames = new ArrayList<String>();
          ArrayList<String> failedSheets = new ArrayList<String>();
          ArrayList<Job> allJobs = new ArrayList<Job>();
-         Recap recap;
-         WeeklyRecapGui gui = new WeeklyRecapGui();         
+         Recap recap;  
 
-/*
          for (File file : allTimeSheets) {
              if (file.isFile()) {
                  timeSheetFileNames.add(file.getName());
@@ -28,10 +26,10 @@ public class Driver {
          for (String fileName : timeSheetFileNames) {
             try {
                curTimeSheet = new TimeSheet(timeSheetFolderPath + fileName);
-               System.out.println(fileName + ":");
                //curTimeSheet.printJobs();
                allJobs.addAll(curTimeSheet.getJobs());
                curTimeSheet.close();
+               System.out.println(fileName + " read succesfully");
             }
             catch (BiffException ex) {
                System.out.println(fileName + " is not a timesheet or is not in the"
@@ -65,7 +63,7 @@ public class Driver {
          
          recap = new Recap(allJobs, timeSheetFolderPath+"testRecap.xls");
          recap.makeRecap();
-         recap.writeRecap();*/
+         recap.writeRecap();
       }
       catch (Exception ex) {
          System.out.println("Caught exception" + ex);
