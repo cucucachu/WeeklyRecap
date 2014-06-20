@@ -17,7 +17,22 @@ public class Job implements Comparable<Job> {
    }
    
    public int compareTo(Job other) {
-      return this.jobNoStr > other.jobNoStr;
+      double jobNoThis;
+      double jobNoOther;
+      
+      try {
+         jobNoThis = Double.parseDouble(this.jobNoStr);
+         jobNoOther = Double.parseDouble(other.jobNoStr);
+         
+         if (jobNoThis > jobNoOther)
+            return 10;
+         else if (jobNoThis < jobNoOther)
+            return -10;
+         else
+            return 0;
+      }
+      catch (NumberFormatException ex){
+         return 0;
+      }
    }
-   
 }

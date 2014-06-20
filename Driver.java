@@ -16,7 +16,9 @@ public class Driver {
          ArrayList<String> failedSheets = new ArrayList<String>();
          ArrayList<Job> allJobs = new ArrayList<Job>();
          Recap recap;
+         WeeklyRecapGui gui = new WeeklyRecapGui();         
 
+/*
          for (File file : allTimeSheets) {
              if (file.isFile()) {
                  timeSheetFileNames.add(file.getName());
@@ -63,7 +65,7 @@ public class Driver {
          
          recap = new Recap(allJobs, timeSheetFolderPath+"testRecap.xls");
          recap.makeRecap();
-         recap.writeRecap();
+         recap.writeRecap();*/
       }
       catch (Exception ex) {
          System.out.println("Caught exception" + ex);

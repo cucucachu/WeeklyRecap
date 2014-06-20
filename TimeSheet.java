@@ -27,11 +27,9 @@ public class TimeSheet {
       wb = Workbook.getWorkbook(new File(filePath));
       //Need to loop through sheets, not call them specifically
 
-      timeSheets.add(wb.getSheet(1));
-      timeSheets.add(wb.getSheet(2));
-      timeSheets.add(wb.getSheet(3));
-      timeSheets.add(wb.getSheet(4));
-      
+      for (int i = 1; i < wb.getNumberOfSheets(); i++)
+         timeSheets.add(wb.getSheet(i));
+
       setInitials();
       
       setJobs();
@@ -57,10 +55,13 @@ public class TimeSheet {
       Cell nameCell;
       Cell initialsCell;
       Iterator<Sheet> it = timeSheets.iterator();
-      Sheet curSheet = it.next();
+      Sheet curSheet;
       
-      //Looks like we're missing a sheet
+      if (wb.getNumberOfSheets() > 5) 
+         throw new TimeSheetFormatException("There are more than 5 sheets in this workbook.");
+      
       while (it.hasNext()) {
+         curSheet = it.next();
          jobCell = curSheet.findCell(JobNoColumnLabel);
          hoursCell = curSheet.findCell(HoursColumnLabel);
          nameCell = curSheet.findCell(NameColumnLabel);
@@ -100,7 +101,6 @@ public class TimeSheet {
                initialsCell = curSheet.getCell(initialsCol, curRow);
             }
          }
-         curSheet = it.next();
       }
    }
    
