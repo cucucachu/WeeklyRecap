@@ -15,8 +15,10 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
       + " in this text box." + newline + newline + "    Enjoy : ) " + newline; 
 
    private JPanel mainPanel;
+   private JPanel fileChooserPopUp;
    private JButton selectButton;
    private JButton runButton;
+   private JTextArea folderSelectText;
    private JTextArea log;
    private JFileChooser fileChooser;
    private JScrollPane logScrollPane;
@@ -54,6 +56,8 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
       logScrollPane = new JScrollPane(log);
       logScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       
+      selectButton = new JButton("Choose Folder");
+      selectButton.addActionListener(this);
       runButton = new JButton("Create Recap");
       runButton.addActionListener(this);
             
@@ -67,7 +71,18 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
    }
    
    public void actionPerformed(ActionEvent e) {
-      weeklyRecap.recapWeek(fileChooser.getSelectedFile().getAbsolutePath());
+      String source = e.getActionCommand();
+      
+      if (source.compareTo("Create Recap") == 0) {
+         weeklyRecap.recapWeek(fileChooser.getSelectedFile().getAbsolutePath());
+      }
+      else if (source.compareTo("Choose Folder") == 0) {
+         openFileChooser();
+      }
+   }
+   
+   private void openFileChooser() {
+      System.out.println("Opening file chooser.");
    }
    
    public void writeToTextArea(String text) {
