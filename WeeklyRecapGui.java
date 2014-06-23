@@ -5,13 +5,14 @@ import java.awt.event.*;
 import javax.swing.filechooser.*;
 
 public class WeeklyRecapGui extends JFrame implements ActionListener {
-   private static final String welcomeText = "Welcome to the Weekly Recap Program.\n\n"
+   private static final String newline = System.lineSeparator();
+   private static final String welcomeText = "Welcome to the Weekly Recap Program." + newline + newline
       + "    To create this week's recap, first put all of this week's time sheets into"
       + " a single folder. Next select the folder in the file chooser above and"
       + " verify the correct path has appeared next to 'Folder Name:'. Finally"
       + " click the Create Recap button below. The recap will be saved in the same"
       + " folder that the timesheets are in. Any errors or messages will be displayed"
-      + " in this text box.\n\n    Enjoy : ) \n"; 
+      + " in this text box." + newline + newline + "    Enjoy : ) " + newline; 
 
    private JPanel mainPanel;
    private JButton selectButton;
@@ -70,6 +71,6 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
    }
    
    public void writeToTextArea(String text) {
-      log.append(text + "\n");
+      log.append(text + newline);
    }
 }

@@ -6,6 +6,7 @@ import java.util.Collections;
 
 public class WeeklyRecap {
 
+   private static final String newline = System.lineSeparator();
    private WeeklyRecapGui gui;
    
    public WeeklyRecap() {    
@@ -58,7 +59,7 @@ public class WeeklyRecap {
             }
          }
                      
-         gui.writeToTextArea("\nFailed to extract info from the following files:");
+         gui.writeToTextArea(newline + "Failed to extract info from the following files:");
          for (String fileName : failedSheets) {
             gui.writeToTextArea(fileName);
          }
@@ -67,7 +68,7 @@ public class WeeklyRecap {
          recap.makeRecap();
          recap.writeRecap();
          
-         gui.writeToTextArea("\nRecap Succesful!");
+         gui.writeToTextArea(newline + "Recap Succesful!");
       }
       catch (Exception ex) {
          gui.writeToTextArea("Caught exception" + ex);

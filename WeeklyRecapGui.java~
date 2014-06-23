@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.filechooser.*;
 
 public class WeeklyRecapGui extends JFrame implements ActionListener {
+   private static final String newline = System.lineSeparator();
    private static final String welcomeText = "Welcome to the Weekly Recap Program.\n\n"
       + "    To create this week's recap, first put all of this week's time sheets into"
       + " a single folder. Next select the folder in the file chooser above and"
@@ -36,6 +37,7 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
    private void guiSetUp() {
       this.setDefaultCloseOperation(EXIT_ON_CLOSE);
       this.setSize(550, 635);
+      this.setResizable(false);
       
       mainPanel = new JPanel();
       

@@ -32,10 +32,9 @@ public class WeeklyRecap {
          for (String fileName : timeSheetFileNames) {
             try {
                curTimeSheet = new TimeSheet(timeSheetFolderPath + fileName);
-               //gui.writeToTextArea(fileName + ":");
-               gui.writeToTextArea("Reading " + fileName);
                allJobs.addAll(curTimeSheet.getJobs());
                curTimeSheet.close();
+               gui.writeToTextArea(fileName + " read succesfully.");
             }
             catch (BiffException ex) {
                gui.writeToTextArea(fileName + " is not a timesheet or is not in the"
