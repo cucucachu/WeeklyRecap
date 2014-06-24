@@ -15,13 +15,20 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
       + " in this text box." + newline + newline + "    Enjoy : ) " + newline; 
 
    private JPanel mainPanel;
-   private JPanel fileChooserPopUp;
-   private JButton selectButton;
-   private JButton runButton;
+   
+   private JPanel selectionPanel;
    private JTextArea folderSelectText;
+   private JButton selectButton;
+   
    private JTextArea log;
-   private JFileChooser fileChooser;
    private JScrollPane logScrollPane;
+   private JButton runButton;
+   
+   private JFrame fileChooserPopUp;
+   private JFileChooser fileChooser;
+   
+   private JProgressBar progressBar;
+   
    private WeeklyRecap weeklyRecap;
 
    public WeeklyRecapGui(WeeklyRecap weeklyRecap) {
@@ -38,7 +45,7 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
    
    private void guiSetUp() {
       this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-      this.setSize(550, 635);
+      this.setSize(550, 375);
       this.setResizable(false);
       
       mainPanel = new JPanel();
@@ -53,15 +60,22 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
       log.setWrapStyleWord(true);
       writeToTextArea(welcomeText);
       
-      logScrollPane = new JScrollPane(log);
-      logScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-      
+      selectionPanel = new JPanel();
+      selectionPanel.setSize(100, 100);
+      folderSelectText = new JTextArea("Select the timesheet folder...", 1, 30);
+      folderSelectText.setEditable(false);
       selectButton = new JButton("Choose Folder");
       selectButton.addActionListener(this);
+      
+      logScrollPane = new JScrollPane(log);
+      logScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       runButton = new JButton("Create Recap");
       runButton.addActionListener(this);
-            
-      mainPanel.add(fileChooser);
+      
+      selectionPanel.add(folderSelectText);
+      selectionPanel.add(selectButton);
+      
+      mainPanel.add(selectionPanel);
       mainPanel.add(logScrollPane);
       mainPanel.add(runButton);
       
@@ -82,7 +96,15 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
    }
    
    private void openFileChooser() {
-   
+      JFrame fileChooserFrame = new JFrame();
+      fileChooserFrame.setSize(500, 300);
+      fileChooserFrame.setResizable(false);
+      fileChooserFrame.add(fileChooser);
+      fileChooserFrame.setVisible(true);
+      
+      fileChooser.showOpenDialog(fileChooserFrame);
+      String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+      folderSelectText.setText(filePath);
    }
    
    public void writeToTextArea(String text) {
