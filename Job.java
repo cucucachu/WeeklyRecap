@@ -1,71 +1,32 @@
 public class Job implements Comparable<Job> {
-   String jobNoStr;
    String jobName;
+   String jobNoStr;
    String initials;
+   String classCode;
    double hours;
    String miles;
    String fdt;
    String other;
+   String type;
+   String prevWage;
    
-   public Job(String jobNoStr, String hours, String jobName, String initials) {
-      this.jobNoStr = jobNoStr;
-      this.hours = Double.parseDouble(hours);
-      this.jobName = jobName;
-      this.initials = initials;
-      this.miles = null;
-      this.fdt = null;
-      this.other = null;
-   }   
    
-   public Job(String jobNoStr, String hours, String jobName, 
-      String initials, String miles) {
-      this.jobNoStr = jobNoStr;
-      this.hours = Double.parseDouble(hours);
+   public Job(String jobName, String jobNoStr, String initials, String classCode,
+      String hours, String miles, String fdt, String other, String type,
+      String prevWage) {
+      
       this.jobName = jobName;
-      this.initials = initials;
-      this.miles = miles;
-      this.fdt = null;
-      this.other = null;
-   }     
-   
-   public Job(String jobNoStr, String hours, String jobName, 
-      String initials, String miles, String fdt) {
       this.jobNoStr = jobNoStr;
-      this.hours = Double.parseDouble(hours);
-      this.jobName = jobName;
       this.initials = initials;
-      this.miles = miles;
-      this.fdt = fdt;
-      this.other = null;
-   }
-   
-   public Job(String jobNoStr, String hours, String jobName, 
-      String initials, String miles, String fdt, String other) {
-      this.jobNoStr = jobNoStr;
+      this.classCode = classCode;
       this.hours = Double.parseDouble(hours);
-      this.jobName = jobName;
-      this.initials = initials;
       this.miles = miles;
       this.fdt = fdt;
       this.other = other;
+      this.type = type;
+      this.prevWage = prevWage;
       
-      if (this.fdt == "")
-         this.fdt = null;
-   } 
-   
-   public String toString() {
-      if (miles == null)
-         return "Job: " + jobName + " " + jobNoStr + " hours: " + hours + " Employee: "
-            + initials;
-      else if (fdt == null) 
-         return "Job: " + jobName + " " + jobNoStr + " hours: " + hours + " miles: "
-            + miles + " Employee: " + initials;
-      else if (other == null)
-         return "Job: " + jobName + " " + jobNoStr + " hours: " + hours + " miles: "
-            + miles + " FDT: " + fdt + "Employee: " + initials;
-      else
-         return "Job: " + jobName + " " + jobNoStr + " hours: " + hours + " miles: "
-            + miles + " FDT: " + fdt + " Other: " + other + "Employee: " + initials;
+      emptyStringsToNull();
    }
    
    public int compareTo(Job other) {
@@ -86,5 +47,28 @@ public class Job implements Comparable<Job> {
       catch (NumberFormatException ex) {
          return this.jobNoStr.compareTo(other.jobNoStr);
       }
+   }
+   
+   public String toString() {
+      return jobName + ": " + jobNoStr;
+   }
+   
+   private void emptyStringsToNull() {
+      if (jobName != null && jobName.isEmpty())
+         jobName = null;
+      if (initials != null && initials.isEmpty())
+         initials = null;
+      if (classCode != null && classCode.isEmpty())
+         classCode = null;
+      if (miles != null && miles.isEmpty())
+         miles = null;
+      if (fdt != null && fdt.isEmpty())
+         fdt = null;
+      if (other != null && other.isEmpty())
+         other = null;
+      if (type != null && type.isEmpty())
+         type = null;
+      if (prevWage != null && prevWage.isEmpty())
+         prevWage = null;
    }
 }

@@ -6,6 +6,8 @@ import java.util.Collections;
 
 public class WeeklyRecap {
 
+   private static final String newline = System.lineSeparator();
+   private static final String RecapFileName = "testRecap.xls";
    private WeeklyRecapGui gui;
    
    public WeeklyRecap() {    
@@ -15,7 +17,8 @@ public class WeeklyRecap {
    public void recapWeek(String timeSheetFolderStr) {
       try {
          TimeSheet curTimeSheet;
-         String timeSheetFolderPath = timeSheetFolderStr + "/";
+         //String timeSheetFolderPath = timeSheetFolderStr + "/";
+         String timeSheetFolderPath = "/home/cody/Professional/MillerPacific/Data/Round 3/TimeSheets/";
          File timeSheetFolder = new File(timeSheetFolderPath);
          File[] allTimeSheets = timeSheetFolder.listFiles();
          ArrayList<String> timeSheetFileNames = new ArrayList<String>();
@@ -34,17 +37,17 @@ public class WeeklyRecap {
                curTimeSheet = new TimeSheet(timeSheetFolderPath + fileName);
                allJobs.addAll(curTimeSheet.getJobs());
                curTimeSheet.close();
-               gui.writeToTextArea(fileName + " read succesfully.");
+               gui.output(fileName + " read succesfully.");
             }
             catch (BiffException ex) {
-               gui.writeToTextArea(fileName + " is not a timesheet or is not in the"
+               gui.output(fileName + " is not a timesheet or is not in the"
                   + " .xls format. Please remove this file, handle it manually or "
                   + "convert it to .xls format. The data from this file will not be "
                   + "included in the output file.");
                failedSheets.add(fileName);
             }
             catch (IndexOutOfBoundsException ex) {
-               gui.writeToTextArea(fileName + " contains less than 5 sheets in its "
+               gui.output(fileName + " contains less than 5 sheets in its "
                   + "workbook. The info from this timesheet will not be included in "
                   + "the output file. Reformat " + fileName + " to the standard "
                   + "timesheet format and rerun this program or add its info to the"
@@ -52,25 +55,39 @@ public class WeeklyRecap {
                failedSheets.add(fileName);
             }
             catch (TimeSheetFormatException ex) {
-               gui.writeToTextArea(fileName + " is incorrectly formatted. "
+               gui.output(fileName + " is incorrectly formatted. "
                   + ex.getMessage());
                failedSheets.add(fileName);
             }
          }
                      
-         gui.writeToTextArea("\nFailed to extract info from the following files:");
+         gui.output(newline + "Failed to extract info from the following files:");
          for (String fileName : failedSheets) {
-            gui.writeToTextArea(fileName);
+            gui.output(fileName);
          }
          
-         recap = new Recap(allJobs, timeSheetFolderPath+"testRecap.xls");
-         recap.makeRecap();
+         File file = new File(timeSheetFolderPath+RecapFileName);
+         if (file.exists() && !file.isDirectory()) {
+            try {
+               gui.output(newline + "Deleting old recap file " + file.getPath()
+                  + "." + newline);
+               file.delete();
+            }
+            catch (Exception ex) {
+               gui.output(newline + "Failed to delete old recap file "
+                  + file.getPath() + "." + newline);
+            }
+         }
+         
+         recap = new Recap(allJobs);
+         recap.makeRecap(timeSheetFolderPath+RecapFileName);
          recap.writeRecap();
          
-         gui.writeToTextArea("\nRecap Succesful!");
+         gui.output(newline + "Recap Succesful!");
+         gui.ouptut("Please close program before opening the recap.");
       }
       catch (Exception ex) {
-         gui.writeToTextArea("Caught exception" + ex);
+         gui.output("Caught exception" + ex);
       }
    }
 }

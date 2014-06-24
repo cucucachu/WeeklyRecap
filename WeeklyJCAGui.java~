@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.filechooser.*;
 
-public class WeeklyRecapGui extends JFrame implements ActionListener {
+public class WeeklyJCAGui extends JFrame implements ActionListener {
    private static final String newline = System.lineSeparator();
    private static final String DefaultDirectory = "/Home";
    private static final String welcomeText = "Welcome to the Weekly Recap Program." + newline + newline

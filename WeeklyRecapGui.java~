@@ -6,6 +6,7 @@ import javax.swing.filechooser.*;
 
 public class WeeklyRecapGui extends JFrame implements ActionListener {
    private static final String newline = System.lineSeparator();
+   private static final String DefaultDirectory = "/Home";
    private static final String welcomeText = "Welcome to the Weekly Recap Program." + newline + newline
       + "    To create this week's recap, first put all of this week's time sheets into"
       + " a single folder. Next select the folder in the file chooser above and"
@@ -52,13 +53,14 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
       
       fileChooser = new JFileChooser();
       fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+      fileChooser.setCurrentDirectory(new File(DefaultDirectory));
       
       log = new JTextArea(15, 44);
       log.setMargin(new Insets(5,5,5,5));
       log.setEditable(false);
       log.setLineWrap(true);
       log.setWrapStyleWord(true);
-      writeToTextArea(welcomeText);
+      output(welcomeText);
       
       selectionPanel = new JPanel();
       selectionPanel.setSize(100, 100);
@@ -86,9 +88,13 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
    
    public void actionPerformed(ActionEvent e) {
       String source = e.getActionCommand();
-      
       if (source.compareTo("Create Recap") == 0) {
-         weeklyRecap.recapWeek(fileChooser.getSelectedFile().getAbsolutePath());
+         try {
+            weeklyRecap.recapWeek(fileChooser.getSelectedFile().getAbsolutePath());
+         }
+         catch (Exception ex) {
+            output("Please select the timesheet folder first.");
+         }
       }
       else if (source.compareTo("Choose Folder") == 0) {
          openFileChooser();
@@ -105,9 +111,10 @@ public class WeeklyRecapGui extends JFrame implements ActionListener {
       fileChooser.showOpenDialog(fileChooserFrame);
       String filePath = fileChooser.getSelectedFile().getAbsolutePath();
       folderSelectText.setText(filePath);
+      fileChooserFrame.setVisible(false);
    }
    
-   public void writeToTextArea(String text) {
+   public void output(String text) {
       log.append(text + newline);
    }
 }

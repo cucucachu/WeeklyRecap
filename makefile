@@ -3,13 +3,17 @@ JCC = javac
 #JFLAGS = -classpath ./jexcelapi/jxl.jar
 
 default: TimeSheetFormatException.class Job.class WeeklyRecap.class TimeSheet.class\
-   Recap.class WeeklyRecapGui.class WeeklyRecapMain.class Driver.class
+   Recap.class WeeklyRecapGui.class WeeklyRecapMain.class Driver.class\
+   RecapFormatException.class
    
 Job.class: Job.java
 	$(JCC) $(JFLAGS) Job.java
 
 Recap.class: Recap.java
 	$(JCC) $(JFLAGS) Recap.java
+	
+RecapFormatException.class: RecapFormatException.java
+	$(JCC) $(JFLAGS) RecapFormatException.java
 
 WeeklyRecap.class: WeeklyRecap.java
 	$(JCC) $(JFLAGS) WeeklyRecap.java
@@ -31,4 +35,5 @@ Driver.class: Driver.java
 
 clean: 
 	$(RM) Job.class WeeklyRecap.class TimeSheet.class TimeSheetFormatException.class\
-	   Recap.class WeeklyRecapGui.class WeeklyRecapMain.class Driver.class
+	   Recap.class WeeklyRecapGui.class WeeklyRecapMain.class Driver.class\
+	   RecapFormatException.class 
